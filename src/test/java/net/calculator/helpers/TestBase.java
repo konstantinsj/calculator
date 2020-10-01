@@ -33,4 +33,10 @@ public class TestBase {
     @AfterClass
     public static void tearDown() {driver.close();
     }
+
+    //we need to truncate all expected results same way as calculator does it
+    public static double truncateExpected(double value) {
+        double scale = Math.pow(10, 10);
+        return Math.round(value * scale) / scale;
+    }
 }

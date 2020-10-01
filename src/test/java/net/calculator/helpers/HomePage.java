@@ -3,6 +3,7 @@ package net.calculator.helpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Arrays;
@@ -20,6 +21,7 @@ public class HomePage extends TestBase {
     private By press1 = By.cssSelector("span.scinm:nth-child(1)");
     private By registrationCheckboxRules = By.xpath("//body//form//span[2]");
     private By result = By.id("sciOutPut");
+    private By input = By.cssSelector("#sciInPut");
     private By pressKey = By.xpath("//span[@onclick='r(3)']");
 
     private String pageUrl = "https://www.calculator.net";
@@ -50,24 +52,19 @@ public class HomePage extends TestBase {
         driver.findElement(addToCartButtonLocator).click();
     }
 
-    public double getResult() {
-        return Double.parseDouble((driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim()));
-    //    return (driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim());
+    public String getResult() {
+    //    return Double.parseDouble((driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim()));
+        return (driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim());
     }
 
-    public String[] openHistoryItems(int itemQuantity) {
-        String[] historyItemArray = new String[itemQuantity];  //
-
-        for (int i = 0; i < itemQuantity; i++) {
-            historyPage();
-            wait.until(ExpectedConditions.elementToBeClickable(historyProductsLocator));
-            driver.findElements(historyProductsLocator).get(i).click();
-            historyItemArray[i] = driver.getCurrentUrl();
-        }
-        // returning reversed list for easier compare
-        Collections.reverse(Arrays.asList(historyItemArray));
-        return historyItemArray;
+    public void input(String inputData) {
+        new Actions(driver).sendKeys(inputData).perform();
+        //driver.findElement(input).sendKeys(inputData);
+        //WebElement element =driver.findElement(input);
+        //((JavascriptExecutor)driver).executeScript("var ele=arguments[0]; ele.innerText = '"+inputData +"';", element);
     }
+
+
 
     public double getTotalPriceFromCart() {
         cartPage();
@@ -76,13 +73,8 @@ public class HomePage extends TestBase {
         return Double.parseDouble(driver.findElement(totalProductsPriceLocator).getAttribute("innerText"));
     }
 
-    public int getItemQuantityFromCart() {
-        WebElement topCartCounterElement = driver.findElement(topCartLocator);
-        return Integer.parseInt(topCartCounterElement.getText());
-    }
-
-    public void pressKey(String x) {
-        driver.findElement(By.xpath("//span[@onclick=\"r(" +x +")\"]")).click();
+    public void pressKey(String key) {
+        driver.findElement(By.xpath("//span[@onclick=\"r(" +key +")\"]")).click();
     }
     public void selectAvailableRandomProduct() {
         //clicking on random product from N pages and selecting N product on that page
@@ -106,19 +98,6 @@ public class HomePage extends TestBase {
         return clickedItemArray;
     }
 
-    public double addRandomProductsToCart(int quantity) {
-
-        double expectedTotalPrice = 0.00;
-
-        for (int i = 0; i < quantity; i++) {
-            selectAvailableRandomProduct();
-         //   expectedTotalPrice = expectedTotalPrice + getProductPrice();
-            addProductToCart();
-            assertEquals(expectedTotalPrice, getTotalPriceFromCart(), 0.01);
-            assertEquals(i+1, getItemQuantityFromCart());
-        }
-        return expectedTotalPrice;
-    }
 
     public double removeTopItemFromCart(int quantity) {
 
