@@ -50,9 +50,9 @@ public class HomePage extends TestBase {
         driver.findElement(addToCartButtonLocator).click();
     }
 
-    public String getResult() {
-    //    return Double.parseDouble(driver.findElement(productPriceLocator).getAttribute("innerText"));
-        return (driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim());
+    public double getResult() {
+        return Double.parseDouble((driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim()));
+    //    return (driver.findElement(By.id("sciOutPut")).getAttribute("innerText").replace('\u00A0',' ').trim());
     }
 
     public String[] openHistoryItems(int itemQuantity) {

@@ -27,7 +27,13 @@ public class CalculatorTest extends TestBase {
         home.pressKey("'/'");
         home.pressKey("3");
 
-        Assert.assertEquals("Expected",(1/3),home.getResult());
+        Assert.assertEquals("Expected",(truncateExpected(1.0/3.0)),home.getResult(), 0.0000000001);
 
+    }
+
+    //we need to truncate all expected results same way as calculator does it
+    public static double truncateExpected(double value) {
+        double scale = Math.pow(10, 10);
+        return Math.round(value * scale) / scale;
     }
 }
