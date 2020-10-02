@@ -4,11 +4,11 @@ comprehensive test suite, just some tests to show approach to test automation.
 Javascript or .NET based toolset prefered.
 Things that preferably should be checked:
 
-Few basic arithmetic operations
-Few operations including negative numbers
-The whole 10x10 multiplication table
-Label change on MR/MC button
-Error on division by 0
+Few basic arithmetic operations;
+Few operations including negative numbers;
+The whole 10x10 multiplication table;
+Label change on MR/MC button;
+Error on division by 0.
 
 Additional tests:
 Memory test;
