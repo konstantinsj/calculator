@@ -5,11 +5,28 @@ import net.calculator.helpers.TestBase;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CalculatorTest extends TestBase {
 
     HomePage home = new HomePage();
+
+    @Test
+    public void testMultiplicationTable() {
+
+        // checking 10x10 multiplication table
+        home.homePage();
+        for (int i =1; i <= 10; i++){
+            for (int b=1; b <=10; b++){
+
+                home.input(i+"*" +b);
+                Assert.assertEquals( i*b, Integer.parseInt(home.getResult()));
+                home.pressKey("'C'");
+            }
+        }
+    }
 
     @Test
     public void testDecimal() {
@@ -21,6 +38,22 @@ public class CalculatorTest extends TestBase {
         home.pressKey("3");
 
         Assert.assertEquals((truncateExpected(1.0/3.0)),Double.parseDouble(home.getResult()), 0.0000000001);
+    }
+
+    @Test
+    public void testMemory()    {
+
+        //writing result in memory, reading it and checking MR/MC label
+        home.homePage();
+        home.input("33 * 3 =");
+        home.pressKey("'M+'");
+        home.pressKey("'C'");
+        Assert.assertEquals("0", home.getResult());
+        Assert.assertEquals("MR", home.readMRClabel());
+
+        home.pressKey("'MR'");
+        Assert.assertEquals("99", home.getResult());
+        Assert.assertEquals("MC", home.readMRClabel());
     }
 
     @Test
@@ -91,22 +124,5 @@ public class CalculatorTest extends TestBase {
         home.pressKey("'/'");
         home.pressKey("0");
         Assert.assertEquals("Error", home.getResult());
-    }
-
-    @Test
-    public void testMultiplicationTable() {
-
-        // checking 10x10 multiplication table
-        home.homePage();
-        for (int i =1; i <= 10; i++){
-            //cycles through the first number to multiply
-
-            for (int b=1; b <=10; b++){
-                //cycles through second number to multiply
-                home.input(i+"*" +b);
-                Assert.assertEquals( i*b, Integer.parseInt(home.getResult()));
-                home.pressKey("'C'");
-            }
-        }
     }
 }
