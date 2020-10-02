@@ -9,7 +9,13 @@ Few operations including negative numbers
 The whole 10x10 multiplication table
 Label change on MR/MC button
 Error on division by 0
-Also, please pay attention to code quality.
 
+Memory test;
+Long numbers
+History
+random numbers
+operation in brackets
+back button test
 
-1.  2 + 2 * 2
+Put chromedriver in project directory and run with maven command
+"mvn clean test"

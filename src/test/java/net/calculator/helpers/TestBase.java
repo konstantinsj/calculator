@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TestBase {
     static WebDriver driver;
-    static String chromeDriverPath = "C:\\Program Files\\chromedriver\\chromedriver.exe";
+    static String chromeDriverPath = "chromedriver.exe";
 
     WebDriverWait wait = new WebDriverWait(driver, 10);
     JavascriptExecutor js = (JavascriptExecutor) driver;

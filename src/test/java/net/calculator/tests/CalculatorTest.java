@@ -1,5 +1,4 @@
 package net.calculator.tests;
-
 import net.calculator.helpers.HomePage;
 import net.calculator.helpers.TestBase;
 import org.junit.Assert;
