@@ -1,9 +1,9 @@
 package net.calculator.tests;
 
-import io.qameta.allure.Step;
 import net.calculator.helpers.HomePage;
 import net.calculator.helpers.TestBase;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.concurrent.ThreadLocalRandom;
 
