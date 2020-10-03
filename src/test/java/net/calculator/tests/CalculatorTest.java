@@ -1,12 +1,9 @@
 package net.calculator.tests;
+
 import net.calculator.helpers.HomePage;
 import net.calculator.helpers.TestBase;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class CalculatorTest extends TestBase {
 
@@ -17,11 +14,11 @@ public class CalculatorTest extends TestBase {
 
         // checking 10x10 multiplication table
         home.homePage();
-        for (int i =1; i <= 10; i++){
-            for (int b=1; b <=10; b++){
+        for (int i = 1; i <= 10; i++) {
+            for (int b = 1; b <= 10; b++) {
 
-                home.input(i+"*" +b);
-                Assert.assertEquals( i*b, Integer.parseInt(home.getResult()));
+                home.input(i + "*" + b);
+                Assert.assertEquals(i * b, Integer.parseInt(home.getResult()));
                 home.pressKey("'C'");
             }
         }
@@ -36,11 +33,11 @@ public class CalculatorTest extends TestBase {
         home.pressKey("'/'");
         home.pressKey("3");
 
-        Assert.assertEquals((truncateExpected(1.0/3.0)),Double.parseDouble(home.getResult()), 0.0000000001);
+        Assert.assertEquals((truncateExpected(1.0 / 3.0)), Double.parseDouble(home.getResult()), 0.0000000001);
     }
 
     @Test
-    public void testMemory()    {
+    public void testMemory() {
 
         //writing result in memory, reading it and checking MR/MC label
         home.homePage();
@@ -61,7 +58,7 @@ public class CalculatorTest extends TestBase {
         // we using keyboard input and checking long value
         home.homePage();
         home.input("2222222222222 * 33333333 =");
-        Assert.assertEquals( "74074073333325920000",home.getResult());
+        Assert.assertEquals("74074073333325920000", home.getResult());
     }
 
     @Test
@@ -70,12 +67,12 @@ public class CalculatorTest extends TestBase {
         //multiplication of negative number
         home.homePage();
         home.input("-5 * 3 =");
-        Assert.assertEquals( -15,Integer.parseInt(home.getResult()));
+        Assert.assertEquals(-15, Integer.parseInt(home.getResult()));
 
         //subtraction of negative number
         home.pressKey("'C'");
         home.input("3 - 5");
-        Assert.assertEquals( -2,Integer.parseInt(home.getResult()));
+        Assert.assertEquals(-2, Integer.parseInt(home.getResult()));
 
         //checking history
         Assert.assertEquals("-5 × 3 = -15", home.getHistory());
@@ -84,16 +81,11 @@ public class CalculatorTest extends TestBase {
     @Test
     public void testRandomArithmetic() {
 
+        // generating 5 random numbers and performing arithmetic operations with them
         home.homePage();
-        double randomNum1 = ThreadLocalRandom.current().nextInt(0, 9999);
-        double randomNum2 = ThreadLocalRandom.current().nextInt(0, 9999);
-        double randomNum3 = ThreadLocalRandom.current().nextInt(0, 9999);
-        double randomNum4 = ThreadLocalRandom.current().nextInt(0, 9999);
-        double randomNum5 = ThreadLocalRandom.current().nextInt(0, 9999);
-
-        home.input(randomNum1 + "/" +randomNum2 + "+" +randomNum3 + "*" +randomNum4 +"-" +randomNum5);
-
-        double ExpectedCalc = (randomNum1/randomNum2+randomNum3*randomNum4-randomNum5);
+        double[] random = genRandom();
+        home.input(random[0] + "/" + random[1] + "+" + random[2] + "*" + random[3] + "-" + random[4]);
+        double ExpectedCalc = (random[0] / random[1] + random[2] * random[3] - random[4]);
         Assert.assertEquals(truncateExpected(ExpectedCalc), Double.parseDouble(home.getResult()), 0.001);
     }
 
@@ -106,7 +98,8 @@ public class CalculatorTest extends TestBase {
         Assert.assertEquals(8, Integer.parseInt(home.getResult()));
 
         //pressing Back button twice to delete last two characters
-        home.pressKey("'bk'");home.pressKey("'bk'");
+        home.pressKey("'bk'");
+        home.pressKey("'bk'");
         Assert.assertEquals(4, Integer.parseInt(home.getResult()));
     }
 
