@@ -25,43 +25,6 @@ public class CalculatorTest extends TestBase {
     }
 
     @Test
-    public void testDecimal() {
-
-        // we using buttons to input and checking long decimals
-        home.homePage();
-        home.pressKey("1");
-        home.pressKey("'/'");
-        home.pressKey("3");
-
-        Assert.assertEquals((truncateExpected(1.0 / 3.0)), Double.parseDouble(home.getResult()), 0.0000000001);
-    }
-
-    @Test
-    public void testMemory() {
-
-        //writing result in memory, reading it and checking MR/MC label
-        home.homePage();
-        home.input("33 * 3 =");
-        home.pressKey("'M+'");
-        home.pressKey("'C'");
-        Assert.assertEquals("0", home.getResult());
-        Assert.assertEquals("MR", home.readMRClabel());
-
-        home.pressKey("'MR'");
-        Assert.assertEquals("99", home.getResult());
-        Assert.assertEquals("MC", home.readMRClabel());
-    }
-
-    @Test
-    public void testLongValues() {
-
-        // we using keyboard input and checking long value
-        home.homePage();
-        home.input("2222222222222 * 33333333 =");
-        Assert.assertEquals("74074073333325920000", home.getResult());
-    }
-
-    @Test
     public void testNegativeAndHistory() {
 
         //multiplication of negative number
@@ -79,28 +42,19 @@ public class CalculatorTest extends TestBase {
     }
 
     @Test
-    public void testRandomArithmetic() {
+    public void testMemory() {
 
-        // generating 5 random numbers and performing arithmetic operations with them
+        //writing result in memory, reading it and checking MR/MC label
         home.homePage();
-        double[] random = genRandom();
-        home.input(random[0] + "/" + random[1] + "+" + random[2] + "*" + random[3] + "-" + random[4]);
-        double ExpectedCalc = (random[0] / random[1] + random[2] * random[3] - random[4]);
-        Assert.assertEquals(truncateExpected(ExpectedCalc), Double.parseDouble(home.getResult()), 0.001);
-    }
+        home.input("33 * 3 =");
+        home.pressKey("'M+'");
+        home.pressKey("'C'");
+        Assert.assertEquals("0", home.getResult());
+        Assert.assertEquals("MR", home.readMRClabel());
 
-    @Test
-    public void testBracketsAndBackButton() {
-
-        //testing that operation in brackets performs before multiplication
-        home.homePage();
-        home.input("(2 + 2) × 2");
-        Assert.assertEquals(8, Integer.parseInt(home.getResult()));
-
-        //pressing Back button twice to delete last two characters
-        home.pressKey("'bk'");
-        home.pressKey("'bk'");
-        Assert.assertEquals(4, Integer.parseInt(home.getResult()));
+        home.pressKey("'MR'");
+        Assert.assertEquals("99", home.getResult());
+        Assert.assertEquals("MC", home.readMRClabel());
     }
 
     @Test
