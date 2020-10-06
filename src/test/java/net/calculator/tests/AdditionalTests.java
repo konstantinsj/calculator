@@ -25,8 +25,8 @@ public class AdditionalTests extends TestBase {
         home.homePage();
         double[] random = genRandom();
         home.input(random[0] + "/" + random[1] + "+" + random[2] + "*" + random[3] + "-" + random[4]);
-        double ExpectedCalc = (random[0] / random[1] + random[2] * random[3] - random[4]);
-        Assert.assertEquals(truncateExpected(ExpectedCalc), Double.parseDouble(home.getResult()), 0.001);
+        double expectedCalc = (random[0] / random[1] + random[2] * random[3] - random[4]);
+        Assert.assertEquals(truncateExpected(expectedCalc), Double.parseDouble(home.getResult()), 0.001);
     }
 
     @Test
